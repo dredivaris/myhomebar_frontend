@@ -45,23 +45,23 @@ export default class Stats {
       "assetsByChunkName.main",
       []
     );
-    const file = (Array.isArray(main) ? main : [main]).find((c: string) =>
-      c.endsWith(`.${ext}`)
-    );
+    // @ts-ignore
+    const file = (Array.isArray(main) ? main : [main]).find((c: string) => c.endsWith(`.${ext}`));
     return file && `/${file}`;
   }
 
   public scripts(): string[] {
     const initial = this.raw.chunks.find((chunk: any) => chunk.initial);
     // workaround for esnext not properly installed
+    // @ts-ignore
     Object.defineProperty(Array.prototype, 'flat', {
-        value: function(depth: any = 1) {
-          return this.reduce(function (flat: any, toFlatten: any) {
-            return flat.concat((Array.isArray(toFlatten) && (depth-1)) ? toFlatten.flat(depth-1) : toFlatten);
-          }, []);
-        }
+      value: function(depth: any = 1) {
+      return this.reduce(function (flat: any, toFlatten: any) {
+        // @ts-ignore
+        return flat.concat((Array.isArray(toFlatten) && (depth-1)) ? toFlatten.flat(depth-1) : toFlatten);
+      }, []);
+    }
     });
-
 
     const scripts: string[] = initial.siblings
       .map((sibling: any) =>
