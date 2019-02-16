@@ -53,6 +53,15 @@ export default class Stats {
 
   public scripts(): string[] {
     const initial = this.raw.chunks.find((chunk: any) => chunk.initial);
+    // workaround for esnext not properly installed
+    Object.defineProperty(Array.prototype, 'flat', {
+        value: function(depth: any = 1) {
+          return this.reduce(function (flat: any, toFlatten: any) {
+            return flat.concat((Array.isArray(toFlatten) && (depth-1)) ? toFlatten.flat(depth-1) : toFlatten);
+          }, []);
+        }
+    });
+
 
     const scripts: string[] = initial.siblings
       .map((sibling: any) =>
