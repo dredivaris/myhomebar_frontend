@@ -4,14 +4,14 @@
 // IMPORTS
 
 /* NPM */
-import * as React from "react";
+import * as React from 'react';
 
 /* Local */
 
 // `<StateConsumer>` takes a function and passes it our MobX
 // state. Any time the state changes, the children will automatically
 // re-render -- no HOCs or boilerplate required!
-import { StateConsumer } from "@/lib/mobx";
+import { StateConsumer } from '@/lib/mobx';
 
 // ----------------------------------------------------------------------------
 
