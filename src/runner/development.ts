@@ -17,7 +17,7 @@ common.spinner
   .info(chalk.default.magenta("Development mode"))
   .info("Building development server...");
 
-app.listen({ port: common.port, host: "localhost" }, async () => {
+app.listen({ port: common.port, host: "0.0.0.0" }, async () => {
   // Init Koa-Webpack dev middleware
   const koaWebpackMiddleware = await KoaWebpack({
     compiler: compiler as any,
