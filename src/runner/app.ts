@@ -29,7 +29,7 @@ import * as ms from "microseconds";
 import * as webpack from "webpack";
 
 /* Ora spinner */
-import * as ora from "ora";
+import ora from "ora";
 
 /* Local */
 import clientConfig from "../webpack/client";
@@ -76,7 +76,7 @@ export const common = {
   port: process.env.PORT || 3000,
 
   // Spinner
-  spinner: ora() as any
+  spinner: ora(),
 };
 
 // Webpack compiler
