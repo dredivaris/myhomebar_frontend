@@ -3,14 +3,12 @@ import * as React from 'react';
 // ----------------------------------------------------------------------------
 
 // Say hello from GraphQL, along with a HackerNews feed fetched by GraphQL
-const Recipes: React.FC = (props) => {
-  console.log('props are', props);
-
+const Bar: React.FC = () => {
   return (
     <>
-      <h2>Recipe list loaded!</h2>
+      <h2>Bar loaded!</h2>
     </>
   );
 };
 
-export default Recipes;
+export default Bar;
