@@ -14,7 +14,7 @@ import Count from './count';
 
 // Hacker News GraphQL example
 // import HackerNews from "./hackernews";
-import NewExample from './new_example';
+import NewExample from '../recipes/new_example';
 
 // ----------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ class Index extends React.PureComponent<{}, IIndexState> {
     return (
       <>
         {/* Note: The <h1> style will have a yellow background due to @/global/styles.ts! */}
-        <h1>HomeBar</h1>
+        <h1>Old</h1>
         <DynamicComponent />
         <Count />
         <NewExample />
