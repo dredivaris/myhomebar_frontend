@@ -1,5 +1,5 @@
 import beverages from '@/queries/beverages';
-import { allApiBeverages } from '@/queries/types/allApiBeverages';
+import { allApiRecipes } from '@/queries/types/allApiRecipes';
 import { List, Typography } from '@material-ui/core';
 import * as React from 'react';
 import { Query } from 'react-apollo';
@@ -11,11 +11,11 @@ const Recipes: React.FC = () => {
   // console.log('props are', props);
 
   return (
-    <Query<allApiBeverages> query={beverages}>
+    <Query<allApiRecipes> query={beverages}>
       {(result) => {
-        if (result.data && result.data.allApiBeverages) {
-          console.log('our results are...', result.data.allApiBeverages.nodes);
-          const beverages = result.data.allApiBeverages.nodes;
+        if (result.data && result.data.allApiRecipes) {
+          console.log('our results are...', result.data.allApiRecipes.nodes);
+          const beverages = result.data.allApiRecipes.nodes;
           beverages.map((bev) => {
             console.log('in bev, ', bev);
           });
@@ -45,8 +45,8 @@ const Recipes: React.FC = () => {
           <>
             <List>
               {result.data &&
-                result.data.allApiBeverages &&
-                result.data.allApiBeverages.nodes.map((bev) => {
+                result.data.allApiRecipes &&
+                result.data.allApiRecipes.nodes.map((bev) => {
                   return <Typography>{bev!.name}</Typography>;
                 })}
               {/*{result.data!.hn.topStories.map(story => (*/}
