@@ -9,6 +9,13 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { hot } from 'react-hot-loader';
 import { Route, Switch } from 'react-router-dom';
+import { createMuiTheme } from "@material-ui/core/styles";
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+library.add(faStarHalfAlt);
+library.add(faStar);
 
 /* Local */
 
@@ -19,12 +26,15 @@ import ScrollTop from '@/components/helpers/scrollTop';
 import globalStyles from '@/global/styles';
 
 // Routes
+import NavBar from '@/components/helpers/navbar';
 import routes from '@/data/routes';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
 // ----------------------------------------------------------------------------
+const theme = createMuiTheme({});
 
 const Root = () => (
-  <div>
+  <ThemeProvider theme={theme}>
     <Global styles={globalStyles} />
     <Helmet>
       <title>HomeBar</title>
@@ -36,7 +46,8 @@ const Root = () => (
         ))}
       </Switch>
     </ScrollTop>
-  </div>
+    <NavBar />
+  </ThemeProvider>
 );
 
 export default hot(module)(Root);
