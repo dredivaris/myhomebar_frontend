@@ -34,4 +34,8 @@ export default css`
   h1 {
     background-color: orange;
   }
+
+  body {
+    background-color: #efefef;
+  }
 `;
