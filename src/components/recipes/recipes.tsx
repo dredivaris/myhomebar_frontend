@@ -1,4 +1,4 @@
-import beverages from '@/queries/recipes';
+import beverages from '@/queries/postgraphile_graphql_queries';
 import { allApiRecipes } from '@/queries/types/allApiRecipes';
 import { List, Typography } from '@material-ui/core';
 import * as React from 'react';
