@@ -87,14 +87,15 @@ const base: webpack.Configuration = {
 
     // Add global variables
     new webpack.DefinePlugin({
+      GRAPHENE: JSON.stringify(process.env.GRAPHENE),
       GRAPHQL: JSON.stringify(process.env.GRAPHQL),
       SERVER: true,
-      WS_SUBSCRIPTIONS: JSON.stringify(process.env.WS_SUBSCRIPTIONS)
-    })
+      WS_SUBSCRIPTIONS: JSON.stringify(process.env.WS_SUBSCRIPTIONS),
+    }),
   ],
 
   resolve: {
-    modules: [path.resolve(__dirname, "..", "..", "node_modules")]
+    modules: [path.resolve(__dirname, "..", "..", "node_modules")],
   },
 
   // Target
