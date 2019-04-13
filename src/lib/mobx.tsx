@@ -3,12 +3,12 @@
 // ----------------------------------------------------------------------------
 // IMPORTS
 
-import * as React from "react";
-import { runInAction } from "mobx";
-import { Observer } from "mobx-react";
+import { runInAction } from 'mobx';
+import { Observer } from 'mobx-react';
+import * as React from 'react';
 
 /* Local */
-import { State } from "@/data/state";
+import { State } from '@/data/state';
 
 // ----------------------------------------------------------------------------
 
@@ -23,11 +23,9 @@ const StateContext = React.createContext<State>(new State());
 export const { Provider: StateProvider } = StateContext;
 
 // State HOC for both receiving and observing state
-export const StateConsumer: React.StatelessComponent<IStateConsumerProps> = ({
-  children
-}) => (
+export const StateConsumer: React.StatelessComponent<IStateConsumerProps> = ({ children }) => (
   <StateContext.Consumer>
-    {state => {
+    {(state) => {
       return <Observer>{() => children(state)}</Observer>;
     }}
   </StateContext.Consumer>
@@ -36,9 +34,9 @@ export const StateConsumer: React.StatelessComponent<IStateConsumerProps> = ({
 // Rehydrate JSON state to MobX
 export function rehydrate(state: State) {
   const s = (window as any).__STATE__;
-  if (typeof s === "object") {
+  if (typeof s === 'object') {
     runInAction(() => {
-      Object.keys(s).forEach(key => ((state as any)[key] = s[key]));
+      Object.keys(s).forEach((key) => ((state as any)[key] = s[key]));
     });
   }
 }
