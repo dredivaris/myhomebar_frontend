@@ -8,33 +8,16 @@
 // Hacker News GraphQL example
 // import HackerNews from "./hackernews";
 import Layout from '@/components/helpers/layout';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Button,
-  Divider,
-  Drawer,
-  FormControl,
-  FormLabel,
-  Grid,
-  IconButton,
-  Input,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  TextField,
-  Theme,
-  Typography,
-} from '@material-ui/core';
+import RecipeForm from '@/components/recipes/form';
+import { Divider, Drawer, IconButton, Paper, Theme, Typography } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import classNames from 'classnames';
+import * as Cookies from 'js-cookie';
 import * as React from 'react';
-import StarRatingComponent from 'react-star-rating-component';
 import RecipeListAppBar from './recipe_list_app_bar';
 import RecipesComponent from './recipes';
-import RecipeForm from '@/components/recipes/form';
 
 /* Local */
 
@@ -125,11 +108,18 @@ const useStyles = makeStyles((theme) => {
 //   recipes: React.FC | null;
 // }
 
-const RecipesContainer = () => {
+const RecipesContainer = (props) => {
   const classes = useStyles();
   const theme: Theme = useTheme();
-
   const [open, setOpen] = React.useState(false);
+  let token = null;
+  try {
+    token = Cookies.get('homebarToken');
+  } catch {}
+  if (!token) {
+    props.history.push('/login');
+  }
+
   // const RecipesComponent = this.state.recipes || (() => <h2>Loading...</h2>);
 
   function handleDrawerOpen() {
