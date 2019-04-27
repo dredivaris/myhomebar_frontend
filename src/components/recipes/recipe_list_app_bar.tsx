@@ -18,7 +18,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
+import * as Cookies from 'js-cookie';
 import * as React from 'react';
+import { compose } from 'react-apollo';
+import { withRouter } from 'react-router';
 
 const styles = (theme: Theme) => ({
   root: {
@@ -113,6 +116,22 @@ class RecipeListAppBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  handleLogin = () => {
+    this.props.history.push('/login');
+  };
+
+  isLoggedIn = () => {
+    try {
+      return !!Cookies.get('homebarToken');
+    } catch (e) {
+      return false;
+    }
+  };
+  handleLogout = () => {
+    Cookies.remove('homebarToken');
+    this.props.history.push('/');
+  };
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes, handleAddDrawerOpen } = this.props;
@@ -127,8 +146,10 @@ class RecipeListAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        {this.isLoggedIn() && <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>}
+        {this.isLoggedIn() && <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>}
+        {!this.isLoggedIn() && <MenuItem onClick={this.handleLogin}>Login/Register</MenuItem>}
+        {this.isLoggedIn() && <MenuItem onClick={this.handleLogout}>Logout</MenuItem>}
       </Menu>
     );
 
@@ -216,4 +237,4 @@ class RecipeListAppBar extends React.Component {
   }
 }
 
-export default withStyles(styles)(RecipeListAppBar);
+export default compose(withStyles(styles), withRouter)(RecipeListAppBar);
