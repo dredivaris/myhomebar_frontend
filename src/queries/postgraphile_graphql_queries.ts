@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 // ----------------------------------------------------------------------------
 
-export default gql`
+export const ALL_API_BEVERAGES = gql`
   query allApiRecipes {
     allApiRecipes {
       nodes {
