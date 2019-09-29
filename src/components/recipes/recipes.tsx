@@ -1,5 +1,5 @@
-import beverages from '@/queries/postgraphile_graphql_queries';
-import { allApiRecipes } from '@/queries/types/allApiRecipes';
+import Recipe from '@/components/recipes/recipe';
+import { USERS_RECIPES_FULL } from '@/queries/graphene_graphql_queries';
 import { List, Typography } from '@material-ui/core';
 import * as React from 'react';
 import { Query } from 'react-apollo';
@@ -8,18 +8,18 @@ import { Query } from 'react-apollo';
 
 // Say hello from GraphQL, along with a HackerNews feed fetched by GraphQL
 const Recipes: React.FC = () => {
-  // console.log('props are', props);
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel: any) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
-    <Query<allApiRecipes> query={beverages}>
+    <Query query={USERS_RECIPES_FULL}>
       {(result) => {
-        if (result.data && result.data.allApiRecipes) {
-          console.log('our results are...', result.data.allApiRecipes.nodes);
-          const beverages = result.data.allApiRecipes.nodes;
-          beverages.map((bev) => {
-            console.log('in bev, ', bev);
-          });
-        }
+        // if (result.data && result.data.usersRecipes) {
+        //   const beverages = result.data.usersRecipes;
+        // }
 
         // Any errors? Say so!
         if (result.error) {
@@ -43,20 +43,15 @@ const Recipes: React.FC = () => {
 
         return (
           <>
-            <List>
+            <div>
               {result.data &&
-                result.data.allApiRecipes &&
-                result.data.allApiRecipes.nodes.map((bev) => {
-                  return <Typography>{bev!.name}</Typography>;
+                result.data.usersRecipes &&
+                result.data.usersRecipes.map((recipe: any) => {
+                  return (
+                    <Recipe usersRecipe={recipe} handleChange={handleChange} expanded={expanded} />
+                  );
                 })}
-              {/*{result.data!.hn.topStories.map(story => (*/}
-              {/*  <Story key={story.id}>*/}
-              {/*    <a href={story.url} target="_blank">*/}
-              {/*      {story.title}*/}
-              {/*    </a>*/}
-              {/*  </Story>*/}
-              {/*))}*/}
-            </List>
+            </div>
           </>
         );
       }}
