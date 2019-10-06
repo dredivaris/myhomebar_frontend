@@ -121,6 +121,7 @@ const RecipesContainer = (props) => {
     props.history.push('/login');
   }
 
+  const [filterText, setFilterText] = React.useState('');
   // const RecipesComponent = this.state.recipes || (() => <h2>Loading...</h2>);
 
   function handleDrawerOpen() {
@@ -129,11 +130,15 @@ const RecipesContainer = (props) => {
   function handleDrawerClose() {
     setOpen(false);
   }
+  function handleFilter(event) {
+    setFilterText(event.target.value);
+  }
   return (
     <>
       <RecipeListAppBar
         position="fixed"
         handleAddDrawerOpen={handleDrawerOpen}
+        handleFilter={handleFilter}
         className={classNames(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -160,7 +165,7 @@ const RecipesContainer = (props) => {
             <RecipeForm />
           </Paper>
         </Drawer>
-        <RecipesComponent />
+        <RecipesComponent filterText={filterText} />
       </Layout>
     </>
   );
