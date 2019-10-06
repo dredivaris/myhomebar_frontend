@@ -16,6 +16,7 @@ import { makeStyles, useTheme } from '@material-ui/styles';
 import classNames from 'classnames';
 import * as Cookies from 'js-cookie';
 import * as React from 'react';
+import withApollo from 'react-apollo/withApollo';
 import RecipeListAppBar from './recipe_list_app_bar';
 import RecipesComponent from './recipes';
 
@@ -143,9 +144,8 @@ const RecipesContainer = (props) => {
           variant="persistent"
           anchor="right"
           open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
+          // this will make drawer not slide all the way, but its a little broken
+          // classes={{ paper: classes.drawerPaper, }}
         >
           <div className={classes.drawerHeader}>
             <IconButton onClick={handleDrawerClose}>
@@ -166,4 +166,4 @@ const RecipesContainer = (props) => {
   );
 };
 
-export default RecipesContainer;
+export default withApollo(RecipesContainer);
