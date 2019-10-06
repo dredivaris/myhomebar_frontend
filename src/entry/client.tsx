@@ -61,6 +61,9 @@ class Main extends React.Component {
   }
 
   render() {
+    if (!this.state.client) {
+      return 'Loading ...';
+    }
     return (
       <CookiesProvider>
         <StateProvider value={state}>
