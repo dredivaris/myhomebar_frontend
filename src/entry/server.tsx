@@ -6,49 +6,49 @@
 /* NPM */
 
 // Implement a global `fetch()` polyfill, for Apollo requests
-import "cross-fetch/polyfill";
+import 'cross-fetch/polyfill';
 
 // React for UI
-import * as React from "react";
+import * as React from 'react';
 
 // The `Context` type for the Koa HTTP server
-import { Context } from "koa";
+import { Context } from 'koa';
 
 // Apollo GraphQL
-import { ApolloProvider, getDataFromTree } from "react-apollo";
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
 
 // MobX state management
-import { toJS } from "mobx";
+import { toJS } from 'mobx';
 
 // React utility to transform JSX to HTML (to send back to the client)
-import * as ReactDOMServer from "react-dom/server";
+import * as ReactDOMServer from 'react-dom/server';
 
 // <Helmet> component for retrieving <head> section, so we can set page
 // title, meta info, etc along with the initial HTML
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
 // React SSR routers
-import { StaticRouter } from "react-router";
+import { StaticRouter } from 'react-router';
 
 /* Local */
 
 // Root component
-import Root from "@/components/root";
+import Root from '@/components/root';
 
 // Utility for creating a per-request Apollo client
-import { createClient } from "@/lib/apollo";
+import { createClient } from '@/lib/apollo';
 
 // State class, containing all of our user-land state fields
-import { State } from "@/data/state";
+import { State } from '@/data/state';
 
 // <StateProvider> lets us send per-request state down a React chain
-import { StateProvider } from "@/lib/mobx";
+import { StateProvider } from '@/lib/mobx';
 
 // Class for handling Webpack stats output
-import Output from "@/lib/output";
+import Output from '@/lib/output';
 
 // Every byte sent back to the client is React; this is our main template
-import Html from "@/views/ssr";
+import Html from '@/views/ssr';
 
 // ----------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ export default function(output: Output) {
   // Create Koa middleware to handle React requests
   return async (ctx: Context) => {
     // Create a new Apollo client
-    const client = createClient();
+    const client = await createClient(ctx.header.cookie);
 
     // Create new MobX state
     const state = new State();
@@ -106,7 +106,7 @@ export default function(output: Output) {
       // third-party, or redirect users to a dedicated 404 page
 
       ctx.status = 404;
-      ctx.body = "Not found";
+      ctx.body = 'Not found';
 
       return;
     }
@@ -116,22 +116,23 @@ export default function(output: Output) {
 
     // Create the React render, and inject the `<head>` section
     // courtesy of React Helmet.
+
     const reactRender = ReactDOMServer.renderToString(
       <Html
-        css={output.client.main("css")!}
+        css={output.client.main('css')!}
         helmet={Helmet.renderStatic()}
         html={html}
         scripts={output.client.scripts()}
         window={{
           __APOLLO_STATE__: client.extract(), // <-- GraphQL store
-          __STATE__: toJS(state) // <-- MobX state
+          __STATE__: toJS(state), // <-- MobX state
         }}
-      />
+      />,
     );
 
     // Set the return type to `text/html`, and dump the response back to
     // the client
-    ctx.type = "text/html";
+    ctx.type = 'text/html';
     ctx.body = `<!DOCTYPE html>${reactRender}`;
   };
 }
