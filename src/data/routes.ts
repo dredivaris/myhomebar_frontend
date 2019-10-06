@@ -20,6 +20,7 @@ import { RouteProps } from 'react-router-dom';
 import BarContainer from '@/components/bar';
 import GroceryListContainer from '@/components/grocery_list';
 import RecipesContainer from '@/components/recipes';
+import Login from '@/components/auth/login';
 
 // ----------------------------------------------------------------------------
 
@@ -46,6 +47,11 @@ const routes: RouteProps[] = [
     component: GroceryListContainer,
     exact: true,
     path: '/grocery',
+  },
+  {
+    component: Login,
+    exact: true,
+    path: '/login',
   },
 ];
 
