@@ -100,7 +100,7 @@
     "contentful": "^7.3.0",
     "cors": "^2.8.5",
     "cross-env": "^5.2.0",
-    "cross-fetch": "^3.0.0",
+    "cross-fetch": "^3.1.5",
     "date-fns": "^2.0.0-alpha.27",
     "dotenv": "^6.2.0",
     "emotion": "^10.0.6",
